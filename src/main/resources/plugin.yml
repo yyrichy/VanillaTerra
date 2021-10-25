@@ -1,0 +1,22 @@
+---
+api-version: 1.17
+author: VapoR
+commands:
+  distortion:
+    description: "Distortion due to the projection"
+    permission: vt.terra.distortion
+    usage: /distortion
+  tpll:
+    description: "Teleport to Lat Long coordinates"
+    permission: vt.tpll
+    usage: /tpll
+  where:
+    aliases:
+      - ll
+      - whereami
+    description: "Where you are on the map in relation to the real world."
+    permission: vt.terra.where
+    usage: /where
+main: me.vapor.vanillaterra.Main
+name: VanillaTerra
+version: "1.0.2"

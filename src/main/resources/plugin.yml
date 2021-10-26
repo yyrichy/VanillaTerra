@@ -1,6 +1,8 @@
 ---
 api-version: 1.17
 author: VapoR
+depend:
+  - DiscordSRV
 commands:
   distortion:
     description: "Distortion due to the projection"

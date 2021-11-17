@@ -19,6 +19,6 @@ commands:
     description: "Where you are on the map in relation to the real world."
     permission: vt.terra.where
     usage: /where
-main: me.vapor.vanillaterra.Main
+main: me.vapor.vanillaterra.VanillaTerra
 name: VanillaTerra
 version: "1.0.2"

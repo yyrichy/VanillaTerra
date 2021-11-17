@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
-public class WhitelistSuite extends JavaPlugin {
+public class VanillaTerra extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getLogger().info("VanillaTerra Ready!");

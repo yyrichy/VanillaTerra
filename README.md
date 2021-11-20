@@ -5,6 +5,3 @@ Used on the BTE NE 1.17 vanilla Minecraft server. Uses [terraminusminus](https:/
 - /distortion
 - /tpll
 - /where
-
-## Requires:
-- DiscordSRV

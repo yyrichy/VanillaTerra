@@ -6,7 +6,6 @@ import net.buildtheearth.terraminusminus.projection.OutOfProjectionBoundsExcepti
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,10 +19,15 @@ public class Distortion implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!commandSender.hasPermission("vt.terra.distortion") && !commandSender.isOp()) {
-            return false;
+            TextComponent textComponent = Component.text("You do not have permission to use that command.")
+                    .color(NamedTextColor.DARK_RED);
+            commandSender.sendMessage(textComponent);
+            return true;
         }
         if (!(commandSender instanceof Player)) {
-            commandSender.sendMessage("Only players can use this command");
+            TextComponent textComponent = Component.text("Only players can use this command.")
+                    .color(NamedTextColor.DARK_RED);
+            commandSender.sendMessage(textComponent);
             return true;
         }
         try{
@@ -42,12 +46,12 @@ public class Distortion implements CommandExecutor {
                 commandSender.sendMessage(ChatColor.DARK_RED + "You are not in the \"earth\". You must be in the projection/map. OutOfProjectionBoundsException");
                 return true;
             }
-            final TextComponent textComponent = Component.text("Distortion: ")
-                    .color(TextColor.color(0x8c8c8c))
-                    .append(Component.text("~", NamedTextColor.DARK_GREEN)
-                    .append(Component.text(Math.sqrt(Math.abs(c[0])), NamedTextColor.RED)).decoration(TextDecoration.BOLD, true)
+            TextComponent textComponent = Component.text("Distortion: ")
+                    .color(NamedTextColor.GRAY)
+                    .append(Component.text("~", NamedTextColor.DARK_GREEN))
+                    .append(Component.text(Math.sqrt(Math.abs(c[0])), NamedTextColor.RED).decoration(TextDecoration.BOLD, true))
                     .append(Component.text(" +/-", NamedTextColor.DARK_GREEN))
-                    .append(Component.text(c[1] * 180.0 / Math.PI + "°", NamedTextColor.RED)).decoration(TextDecoration.BOLD, true));
+                    .append(Component.text(c[1] * 180.0 / Math.PI + "°", NamedTextColor.RED).decoration(TextDecoration.BOLD, true));
             commandSender.sendMessage(textComponent);
         }catch(Exception e){
             commandSender.sendMessage("A unknown error occurred. Please contact the server's developers.");

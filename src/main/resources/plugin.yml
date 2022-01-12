@@ -1,24 +1,43 @@
 ---
-api-version: 1.17
+api-version: 1.18
 author: VapoR
 depend:
   - DiscordSRV
 commands:
-  distortion:
-    description: "Distortion due to the projection"
-    permission: vt.terra.distortion
-    usage: /distortion
   tpll:
-    description: "Teleport to Lat Long coordinates"
+    description: "Teleports player to latitude longitude coordinates."
     permission: vt.tpll
     usage: /tpll
+  distortion:
+    description: "Returns amount of distortion due to the projection at the player's location."
+    permission: vt.terra.distortion
+    usage: /distortion
   where:
     aliases:
       - ll
       - whereami
-    description: "Where you are on the map in relation to the real world."
+    description: "Returns your location in relation to the real world."
     permission: vt.terra.where
     usage: /where
+permissions:
+  vt.*:
+    description: "Wild card"
+    children:
+      vt.tpll: true
+      vt.terra: true
+      vt.terra.distortion: true
+      vt.terra.where: true
+  vt.tpll:
+    description: "Allows usage of /tpll"
+  vt.terra.*:
+    description: "Allows usage of all terra commands"
+    children:
+      vt.terra.distortion: true
+      vt.terra.where: true
+  vt.terra.distortion:
+    description: "Allows usage of /distortion"
+  vt.terra.where:
+    description: "Allows usage of /where"
 main: me.vapor.vanillaterra.VanillaTerra
 name: VanillaTerra
 version: "1.0.2"

@@ -5,6 +5,11 @@ import net.buildtheearth.terraminusminus.projection.GeographicProjection;
 import net.buildtheearth.terraminusminus.projection.OutOfProjectionBoundsException;
 import net.buildtheearth.terraminusminus.util.geo.CoordinateParseUtils;
 import net.buildtheearth.terraminusminus.util.geo.LatLng;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -20,10 +25,15 @@ public class Tpll implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!commandSender.hasPermission("vt.tpll") && !commandSender.isOp()) {
-            return false;
+            TextComponent textComponent = Component.text("You do not have permission to use that command.")
+                    .color(NamedTextColor.DARK_RED);
+            commandSender.sendMessage(textComponent);
+            return true;
         }
         if(!(commandSender instanceof Player)){
-            commandSender.sendMessage("Only players can use this command");
+            TextComponent textComponent = Component.text("Only players can use this command.")
+                    .color(NamedTextColor.DARK_RED);
+            commandSender.sendMessage(textComponent);
             return true;
         }
         try {
@@ -49,7 +59,9 @@ public class Tpll implements CommandExecutor {
             }
 
             if (defaultCoords == null) {
-                player.sendMessage(ChatColor.DARK_RED + "Invalid coordinates. Ex: /tpll 38.897633, -77.0366201");
+                TextComponent textComponent = Component.text("Invalid coordinates. </tpll latitude longitude>")
+                        .color(NamedTextColor.RED);
+                commandSender.sendMessage(textComponent);
                 return true;
             }
 
@@ -69,12 +81,19 @@ public class Tpll implements CommandExecutor {
             else {
                 int highest = player.getWorld().getHighestBlockAt((int) c[0], (int) c[1]).getY();
                 if(highest < 1){
-                    commandSender.sendMessage(ChatColor.DARK_RED + "Stay in the already generated areas of Hartford, Portland, Annapolis, and Middletown.");
+                    TextComponent textComponent = Component.text("Please stay in generated areas. You are teleporting to restricted areas.")
+                            .color(NamedTextColor.RED);
+                    commandSender.sendMessage(textComponent);
                     return true;
                 }
                 y = highest + 1;
             }
-            commandSender.sendMessage(ChatColor.GREEN + "Teleporting to " + defaultCoords.getLat() + " " + defaultCoords.getLng());
+            TextComponent textComponent = Component.text("Teleporting to ")
+                    .color(NamedTextColor.GRAY)
+                    .append(Component.text(defaultCoords.getLat(), NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true))
+                    .append(Component.text(", ", NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true))
+                    .append(Component.text(defaultCoords.getLng(), NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true));
+            commandSender.sendMessage(textComponent);
             player.teleportAsync(new Location(player.getWorld(), c[0], y, c[1], l.getYaw(), l.getPitch()));
         } catch (Exception e) {
             e.printStackTrace();

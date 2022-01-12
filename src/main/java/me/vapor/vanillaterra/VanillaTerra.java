@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class VanillaTerra extends JavaPlugin {
     @Override
     public void onEnable() {

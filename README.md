@@ -1,8 +1,23 @@
-# VanillaTerra (1.17 - 1.18)
-Used on the BTE NE 1.18 vanilla Minecraft server. Uses [terraminusminus](https://github.com/SmylerMC/terraminusminus). Made for a vanilla world with dymaxion edited projection.
-Tested on 1.18, native 1.17
+# VanillaTerra (1.18)
+For use on a 1.18 BTE vanilla Minecraft server.  
+Used on the BTE NE 1.18 vanilla Minecraft server.  
+Uses [terraminusminus](https://github.com/SmylerMC/terraminusminus).
 
-## Features: 
-- /distortion
-- /tpll
-- /where
+(Currently nly works on BTE default settings/projection)
+
+## Commands:
+### /tpll
+```
+Permission: vt.tpll
+Description: Teleports player to latitude longitude coordinates.
+```
+### /distortion
+```
+Permission: vt.terra.distortion
+Description: Returns amount of distortion due to the projection at the player's location.
+```
+### /where
+```
+Permission: vt.terra.where
+Description: Returns your location in relation to the real world.
+```

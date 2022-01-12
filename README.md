@@ -3,7 +3,7 @@ For use on a 1.18 BTE vanilla Minecraft server.
 Used on the BTE NE 1.18 vanilla Minecraft server.  
 Uses [terraminusminus](https://github.com/SmylerMC/terraminusminus).
 
-(Currently nly works on BTE default settings/projection)
+(Currently only works on BTE default settings/projection)
 
 ## Commands:
 ### /tpll

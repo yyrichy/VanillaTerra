@@ -4,9 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>VanillaTerra</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <groupId>com.github.vaporrrr</groupId>
+    <artifactId>vanillaterra</artifactId>
+    <version>1.0.4</version>
+    <packaging>jar</packaging>
+
+    <name>VanillaTerra</name>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -55,6 +58,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.name}-${project.version}-SNAPSHOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -85,6 +89,7 @@
                                     </excludes>
                                 </filter>
                             </filters>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                             <minimizeJar>true</minimizeJar>
                         </configuration>
                     </execution>

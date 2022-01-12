@@ -1,4 +1,4 @@
-package me.vapor.vanillaterra.commands;
+package com.github.vaporrrr.vanillaterra.commands;
 
 import net.buildtheearth.terraminusminus.generator.EarthGeneratorSettings;
 import net.buildtheearth.terraminusminus.projection.GeographicProjection;

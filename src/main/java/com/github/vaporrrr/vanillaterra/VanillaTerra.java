@@ -1,8 +1,8 @@
-package me.vapor.vanillaterra;
+package com.github.vaporrrr.vanillaterra;
 
-import me.vapor.vanillaterra.commands.Distortion;
-import me.vapor.vanillaterra.commands.Tpll;
-import me.vapor.vanillaterra.commands.Where;
+import com.github.vaporrrr.vanillaterra.commands.Distortion;
+import com.github.vaporrrr.vanillaterra.commands.Tpll;
+import com.github.vaporrrr.vanillaterra.commands.Where;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;

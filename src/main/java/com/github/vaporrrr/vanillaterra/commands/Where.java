@@ -1,4 +1,4 @@
-package me.vapor.vanillaterra.commands;
+package com.github.vaporrrr.vanillaterra.commands;
 
 import net.buildtheearth.terraminusminus.generator.EarthGeneratorSettings;
 import net.buildtheearth.terraminusminus.projection.GeographicProjection;
@@ -50,7 +50,8 @@ public class Where implements CommandExecutor {
                     .append(Component.text(", ", NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true))
                     .append(Component.text(c[0], NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true))).clickEvent(ClickEvent.copyToClipboard(c[1] + " " + c[0]))
                     .append(Component.text("\n")))
-                    .append(Component.text("[Google Maps Link]", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://www.google.com/maps/search/?api=1&query=" + c[1] + "," + c[0])).decoration(TextDecoration.BOLD, true));
+                    .append(Component.text("[Google Maps Link]", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://www.google.com/maps/search/?api=1&query=" + c[1] + "," + c[0])).decoration(TextDecoration.BOLD, true))
+                    .append(Component.text(" [Yandex Link]", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://yandex.com/maps/?ll=" + c[0] + "%2C" + c[1] + "z=10")).decoration(TextDecoration.BOLD, true));
             commandSender.sendMessage(textComponent);
         }catch(Exception e){
             commandSender.sendMessage("A unknown error occurred. Please contact the server's developers.");

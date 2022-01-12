@@ -38,6 +38,6 @@ permissions:
     description: "Allows usage of /distortion"
   vt.terra.where:
     description: "Allows usage of /where"
-main: me.vapor.vanillaterra.VanillaTerra
-name: VanillaTerra
-version: "1.0.2"
+main: "com.github.vaporrrr.vanillaterra.VanillaTerra"
+name: "VanillaTerra"
+version: ${project.version}

@@ -1,8 +1,6 @@
 ---
 api-version: 1.18
 author: VapoR
-depend:
-  - DiscordSRV
 commands:
   tpll:
     description: "Teleports player to latitude longitude coordinates."

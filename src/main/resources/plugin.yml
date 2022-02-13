@@ -17,14 +17,21 @@ commands:
     description: "Returns your location in relation to the real world."
     permission: vt.terra.where
     usage: /where
+  vt-reload:
+    description: "Reloads plugin config."
+    permission: vt.reload
+    usage: /vt-reload
 permissions:
   vt.*:
     description: "Wild card"
     children:
+      vt.reload: true
       vt.tpll: true
       vt.terra: true
       vt.terra.distortion: true
       vt.terra.where: true
+  vt.reload:
+    description: "Allows usage of /vt-reload"
   vt.tpll:
     description: "Allows usage of /tpll"
   vt.terra.*:

@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,7 +42,9 @@ public class Distortion implements CommandExecutor {
                 e.printStackTrace();
             }
             if (c == null || Double.isNaN(c[0])) {
-                commandSender.sendMessage(ChatColor.DARK_RED + "You are not in the \"earth\". You must be in the projection/map. OutOfProjectionBoundsException");
+                TextComponent textComponent = Component.text("You are not in the \"earth\". You must be in the projection/map.")
+                        .color(NamedTextColor.DARK_RED);
+                commandSender.sendMessage(textComponent);
                 return true;
             }
             TextComponent textComponent = Component.text("Distortion: ")

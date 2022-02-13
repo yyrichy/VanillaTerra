@@ -8,9 +8,7 @@ import net.buildtheearth.terraminusminus.util.geo.LatLng;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Tpll implements CommandExecutor {
@@ -30,7 +29,7 @@ public class Tpll implements CommandExecutor {
             commandSender.sendMessage(textComponent);
             return true;
         }
-        if(!(commandSender instanceof Player)){
+        if (!(commandSender instanceof Player)) {
             TextComponent textComponent = Component.text("Only players can use this command.")
                     .color(NamedTextColor.DARK_RED);
             commandSender.sendMessage(textComponent);
@@ -42,7 +41,7 @@ public class Tpll implements CommandExecutor {
             LatLng defaultCoords = CoordinateParseUtils.parseVerbatimCoordinates(this.getRawArguments(args).trim());
 
             if (defaultCoords == null) {
-                LatLng possiblePlayerCoords = CoordinateParseUtils.parseVerbatimCoordinates(this.getRawArguments(this.selectArray(args, 1)));
+                LatLng possiblePlayerCoords = CoordinateParseUtils.parseVerbatimCoordinates(this.getRawArguments(this.selectArray(args)));
                 if (possiblePlayerCoords != null) {
                     defaultCoords = possiblePlayerCoords;
                 }
@@ -53,7 +52,7 @@ public class Tpll implements CommandExecutor {
                 defaultCoords = possibleHeightCoords;
             }
 
-            LatLng possibleHeightNameCoords = CoordinateParseUtils.parseVerbatimCoordinates(this.getRawArguments(this.inverseSelectArray(this.selectArray(args, 1), this.selectArray(args, 1).length - 1)));
+            LatLng possibleHeightNameCoords = CoordinateParseUtils.parseVerbatimCoordinates(this.getRawArguments(this.inverseSelectArray(this.selectArray(args), this.selectArray(args).length - 1)));
             if (possibleHeightNameCoords != null) {
                 defaultCoords = possibleHeightNameCoords;
             }
@@ -75,12 +74,11 @@ public class Tpll implements CommandExecutor {
                 e.printStackTrace();
             }
             int y;
-            if(args.length >= 3 && isInteger(args[2])){
+            if (args.length >= 3 && isInteger(args[2])) {
                 y = Integer.parseInt(args[2]);
-            }
-            else {
+            } else {
                 int highest = player.getWorld().getHighestBlockAt((int) c[0], (int) c[1]).getY();
-                if(highest < 1){
+                if (highest < 1) {
                     TextComponent textComponent = Component.text("Please stay in generated areas. You are teleporting to restricted areas.")
                             .color(NamedTextColor.RED);
                     commandSender.sendMessage(textComponent);
@@ -102,10 +100,10 @@ public class Tpll implements CommandExecutor {
     }
 
     /**
-     * Gets a space seperated string from an array
+     * Gets a space separated string from an array
      *
      * @param args A string array
-     * @return The space seperated String
+     * @return The space separated String
      */
     private String getRawArguments(String[] args) {
         if (args.length == 0) {
@@ -128,36 +126,29 @@ public class Tpll implements CommandExecutor {
      * Gets all objects in a string array above a given index
      *
      * @param args  Initial array
-     * @param index Starting index
      * @return Selected array
      */
-    private String[] selectArray(String[] args, int index) {
-        List<String> array = new ArrayList<>();
-        for (int i = index; i < args.length; i++) {
-            array.add(args[i]);
-        }
-
-        return array.toArray(array.toArray(new String[array.size()]));
+    private String[] selectArray(String[] args) {
+        List<String> array = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
+        return array.toArray(array.toArray(new String[0]));
     }
 
     private String[] inverseSelectArray(String[] args, int index) {
-        List<String> array = new ArrayList<>();
-        for (int i = 0; i < index; i++) {
-            array.add(args[i]);
-        }
-
-        return array.toArray(array.toArray(new String[array.size()]));
-
+        List<String> array = new ArrayList<>(Arrays.asList(args).subList(0, index));
+        return array.toArray(array.toArray(new String[0]));
     }
 
     public static boolean isInteger(String s) {
-        if(s.isEmpty()) return false;
-        for(int i = 0; i < s.length(); i++) {
-            if(i == 0 && s.charAt(i) == '-') {
-                if(s.length() == 1) return false;
-                else continue;
+        if (s.isEmpty()) return false;
+        for (int i = 0; i < s.length(); i++) {
+            if (i == 0 && s.charAt(i) == '-') {
+                if (s.length() == 1) {
+                    return false;
+                } else {
+                    continue;
+                }
             }
-            if(Character.digit(s.charAt(i),10) < 0) return false;
+            if (Character.digit(s.charAt(i), 10) < 0) return false;
         }
         return true;
     }

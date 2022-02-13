@@ -21,3 +21,8 @@ Description: Returns amount of distortion due to the projection at the player's 
 Permission: vt.terra.where
 Description: Returns your location in relation to the real world.
 ```
+### /vt-reload
+```
+Permission: vt.reload
+Description: Reloads plugin config.
+```

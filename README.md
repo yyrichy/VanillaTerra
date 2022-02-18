@@ -3,7 +3,11 @@ For use on a 1.18 BTE vanilla Minecraft server.
 Used on the BTE NE 1.18 vanilla Minecraft server.  
 Uses [terraminusminus](https://github.com/SmylerMC/terraminusminus).
 
-(Currently only works on BTE default settings/projection)
+(Currently only supports BTE default settings/projection)
+
+## Requires
+
+[PaperMC](https://papermc.io/) or a fork downstream of it (You can't use Spigot/CraftBukkit/Bukkit)
 
 ## Commands:
 ### /tpll

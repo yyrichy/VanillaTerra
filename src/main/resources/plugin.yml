@@ -45,4 +45,4 @@ permissions:
     description: "Allows usage of /where"
 main: "com.github.vaporrrr.vanillaterra.VanillaTerra"
 name: "VanillaTerra"
-version: 1.0.7
+version: 1.0.6

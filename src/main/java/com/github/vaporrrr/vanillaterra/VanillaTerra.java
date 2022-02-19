@@ -10,8 +10,15 @@ public class VanillaTerra extends JavaPlugin {
     @Override
     @SuppressWarnings("ConstantConditions")
     public void onEnable() {
+        try {
+            Class.forName("com.destroystokyo.paper.PaperConfig");
+        } catch (ClassNotFoundException e) {
+            getLogger().info("This plugin only supports paper and its downstream forks. Disabling...");
+            getPluginLoader().disablePlugin(this);
+            return;
+        }
         saveDefaultConfig();
-        this.getLogger().info("VanillaTerra Ready!");
+        getLogger().info("VanillaTerra enabled!");
         getCommand("tpll").setExecutor(new Tpll());
         getCommand("where").setExecutor(new Where());
         getCommand("distortion").setExecutor(new Distortion());

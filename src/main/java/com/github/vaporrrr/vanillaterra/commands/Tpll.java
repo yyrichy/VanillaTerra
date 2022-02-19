@@ -78,7 +78,7 @@ public class Tpll implements CommandExecutor {
                 y = Integer.parseInt(args[2]);
             } else {
                 int highest = player.getWorld().getHighestBlockAt((int) c[0], (int) c[1]).getY();
-                if (highest < 1) {
+                if (highest <= player.getWorld().getMinHeight()) {
                     TextComponent textComponent = Component.text("Please stay in generated areas. You are teleporting to restricted areas.")
                             .color(NamedTextColor.RED);
                     commandSender.sendMessage(textComponent);

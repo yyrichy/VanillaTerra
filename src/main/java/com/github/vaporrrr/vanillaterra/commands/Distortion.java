@@ -1,5 +1,6 @@
 package com.github.vaporrrr.vanillaterra.commands;
 
+import com.github.vaporrrr.vanillaterra.VanillaTerra;
 import net.buildtheearth.terraminusminus.generator.EarthGeneratorSettings;
 import net.buildtheearth.terraminusminus.projection.GeographicProjection;
 import net.buildtheearth.terraminusminus.projection.OutOfProjectionBoundsException;
@@ -20,13 +21,13 @@ public class Distortion implements CommandExecutor {
         if (!commandSender.hasPermission("vt.terra.distortion") && !commandSender.isOp()) {
             TextComponent textComponent = Component.text("You do not have permission to use that command.")
                     .color(NamedTextColor.DARK_RED);
-            commandSender.sendMessage(textComponent);
+            VanillaTerra.sendComponent(commandSender, textComponent);
             return true;
         }
         if (!(commandSender instanceof Player)) {
             TextComponent textComponent = Component.text("Only players can use this command.")
                     .color(NamedTextColor.DARK_RED);
-            commandSender.sendMessage(textComponent);
+            VanillaTerra.sendComponent(commandSender, textComponent);
             return true;
         }
         try{
@@ -44,7 +45,7 @@ public class Distortion implements CommandExecutor {
             if (c == null || Double.isNaN(c[0])) {
                 TextComponent textComponent = Component.text("You are not in the \"earth\". You must be in the projection/map.")
                         .color(NamedTextColor.DARK_RED);
-                commandSender.sendMessage(textComponent);
+                VanillaTerra.sendComponent(commandSender, textComponent);
                 return true;
             }
             TextComponent textComponent = Component.text("Distortion: ")
@@ -53,7 +54,7 @@ public class Distortion implements CommandExecutor {
                     .append(Component.text(Math.sqrt(Math.abs(c[0])), NamedTextColor.RED).decoration(TextDecoration.BOLD, true))
                     .append(Component.text(" +/-", NamedTextColor.DARK_GREEN))
                     .append(Component.text(c[1] * 180.0 / Math.PI + "°", NamedTextColor.RED).decoration(TextDecoration.BOLD, true));
-            commandSender.sendMessage(textComponent);
+            VanillaTerra.sendComponent(commandSender, textComponent);
         }catch(Exception e){
             commandSender.sendMessage("A unknown error occurred. Please contact the server's developers.");
             e.printStackTrace();

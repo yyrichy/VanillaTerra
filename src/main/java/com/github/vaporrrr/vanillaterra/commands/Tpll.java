@@ -1,5 +1,7 @@
 package com.github.vaporrrr.vanillaterra.commands;
 
+import com.github.vaporrrr.vanillaterra.VanillaTerra;
+import io.papermc.lib.PaperLib;
 import net.buildtheearth.terraminusminus.generator.EarthGeneratorSettings;
 import net.buildtheearth.terraminusminus.projection.GeographicProjection;
 import net.buildtheearth.terraminusminus.projection.OutOfProjectionBoundsException;
@@ -26,13 +28,13 @@ public class Tpll implements CommandExecutor {
         if (!commandSender.hasPermission("vt.tpll") && !commandSender.isOp()) {
             TextComponent textComponent = Component.text("You do not have permission to use that command.")
                     .color(NamedTextColor.DARK_RED);
-            commandSender.sendMessage(textComponent);
+            VanillaTerra.sendComponent(commandSender, textComponent);
             return true;
         }
         if (!(commandSender instanceof Player)) {
             TextComponent textComponent = Component.text("Only players can use this command.")
                     .color(NamedTextColor.DARK_RED);
-            commandSender.sendMessage(textComponent);
+            VanillaTerra.sendComponent(commandSender, textComponent);
             return true;
         }
         try {
@@ -60,7 +62,7 @@ public class Tpll implements CommandExecutor {
             if (defaultCoords == null) {
                 TextComponent textComponent = Component.text("Invalid coordinates. </tpll latitude longitude>")
                         .color(NamedTextColor.RED);
-                commandSender.sendMessage(textComponent);
+                VanillaTerra.sendComponent(commandSender, textComponent);
                 return true;
             }
 
@@ -81,7 +83,7 @@ public class Tpll implements CommandExecutor {
                 if (highest <= player.getWorld().getMinHeight()) {
                     TextComponent textComponent = Component.text("Please stay in generated areas. You are teleporting to restricted areas.")
                             .color(NamedTextColor.RED);
-                    commandSender.sendMessage(textComponent);
+                    VanillaTerra.sendComponent(commandSender, textComponent);
                     return true;
                 }
                 y = highest + 1;
@@ -91,8 +93,8 @@ public class Tpll implements CommandExecutor {
                     .append(Component.text(defaultCoords.getLat(), NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true))
                     .append(Component.text(", ", NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true))
                     .append(Component.text(defaultCoords.getLng(), NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true));
-            commandSender.sendMessage(textComponent);
-            player.teleportAsync(new Location(player.getWorld(), c[0], y, c[1], l.getYaw(), l.getPitch()));
+            VanillaTerra.sendComponent(commandSender, textComponent);
+            PaperLib.teleportAsync(player, new Location(player.getWorld(), c[0], y, c[1], l.getYaw(), l.getPitch()));
         } catch (Exception e) {
             e.printStackTrace();
         }

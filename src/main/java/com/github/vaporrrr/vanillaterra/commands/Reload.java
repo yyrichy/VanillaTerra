@@ -15,13 +15,13 @@ public class Reload implements CommandExecutor {
         if (!commandSender.hasPermission("vt.reload") && !commandSender.isOp()) {
             TextComponent textComponent = Component.text("You do not have permission to use that command.")
                     .color(NamedTextColor.DARK_RED);
-            commandSender.sendMessage(textComponent);
+            VanillaTerra.sendComponent(commandSender, textComponent);
             return true;
         }
-        VanillaTerra.getPlugin(VanillaTerra.class).reloadConfig();
+        VanillaTerra.getPlugin().reloadConfig();
         TextComponent textComponent = Component.text("Plugin reloaded.")
                 .color(NamedTextColor.GREEN);
-        commandSender.sendMessage(textComponent);
+        VanillaTerra.sendComponent(commandSender, textComponent);
         return true;
     }
 }

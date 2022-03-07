@@ -7,7 +7,7 @@ Uses [terraminusminus](https://github.com/SmylerMC/terraminusminus).
 
 ## Requires
 
-[PaperMC](https://papermc.io/) or a fork downstream of it (You can't use Spigot/CraftBukkit/Bukkit)
+[Spigot](https://www.spigotmc.org/) / [PaperMC](https://papermc.io/) / downstream forks.
 
 ## Commands:
 ### /tpll

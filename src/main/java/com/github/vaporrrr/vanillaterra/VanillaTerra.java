@@ -4,19 +4,24 @@ import com.github.vaporrrr.vanillaterra.commands.Distortion;
 import com.github.vaporrrr.vanillaterra.commands.Reload;
 import com.github.vaporrrr.vanillaterra.commands.Tpll;
 import com.github.vaporrrr.vanillaterra.commands.Where;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.TextComponent;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTerra extends JavaPlugin {
+    private final FileConfiguration config;
+    private BukkitAudiences adventure;
+
+    public VanillaTerra() {
+        this.config = getConfig();
+    }
+
     @Override
     @SuppressWarnings("ConstantConditions")
     public void onEnable() {
-        try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
-        } catch (ClassNotFoundException e) {
-            getLogger().info("This plugin only supports paper and its downstream forks. Disabling...");
-            getPluginLoader().disablePlugin(this);
-            return;
-        }
+        this.adventure = BukkitAudiences.create(this);
         saveDefaultConfig();
         getLogger().info("VanillaTerra enabled!");
         getCommand("tpll").setExecutor(new Tpll());
@@ -25,5 +30,17 @@ public class VanillaTerra extends JavaPlugin {
         getCommand("vt-reload").setExecutor(new Reload());
         getConfig().options().copyDefaults(true);
         saveConfig();
+    }
+
+    public static void sendComponent(CommandSender commandSender, TextComponent textComponent) {
+        getPlugin().adventure.sender(commandSender).sendMessage(textComponent);
+    }
+
+    public static VanillaTerra getPlugin() {
+        return getPlugin(VanillaTerra.class);
+    }
+
+    public static FileConfiguration config() {
+        return getPlugin().config;
     }
 }

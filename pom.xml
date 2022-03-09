@@ -56,7 +56,7 @@
         <dependency>
             <groupId>com.github.SmylerMC</groupId>
             <artifactId>terraminusminus</artifactId>
-            <version>master-2ce9054587-1</version>
+            <version>master-ae86e4c0e0-1</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>

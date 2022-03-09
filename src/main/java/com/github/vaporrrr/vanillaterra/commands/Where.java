@@ -22,18 +22,16 @@ public class Where implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!commandSender.hasPermission("vt.terra.where") && !commandSender.isOp()) {
-            TextComponent textComponent = Component.text("You do not have permission to use that command.")
-                    .color(NamedTextColor.DARK_RED);
-            VanillaTerra.sendComponent(commandSender, textComponent);
+            VanillaTerra.sendComponent(commandSender, Component.text("You do not have permission to use that command.")
+                    .color(NamedTextColor.DARK_RED));
             return true;
         }
         if (!(commandSender instanceof Player)) {
-            TextComponent textComponent = Component.text("Only players can use this command.")
-                    .color(NamedTextColor.DARK_RED);
-            VanillaTerra.sendComponent(commandSender, textComponent);
+            VanillaTerra.sendComponent(commandSender, Component.text("Only players can use this command.")
+                    .color(NamedTextColor.DARK_RED));
             return true;
         }
-        try{
+        try {
             Location l = ((Player) commandSender).getLocation();
             EarthGeneratorSettings bteSettings = EarthGeneratorSettings.parse(EarthGeneratorSettings.BTE_DEFAULT_SETTINGS);
             GeographicProjection projection = bteSettings.projection();
@@ -52,22 +50,23 @@ public class Where implements CommandExecutor {
             TextComponent textComponent = Component.text("You are at ")
                     .color(NamedTextColor.GRAY)
                     .append(((Component.text(lat, NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true))
-                    .append(Component.text(", ", NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true))
-                    .append(Component.text(lng, NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true))).clickEvent(ClickEvent.copyToClipboard(lat + " " + lng))
-                    .append(Component.text("\n")));
+                            .append(Component.text(", ", NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true))
+                            .append(Component.text(lng, NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true))).clickEvent(ClickEvent.copyToClipboard(lat + " " + lng))
+                            .append(Component.text("\n")));
             List<String> mapLinks = VanillaTerra.config().getStringList("MapLinks");
             if (mapLinks.contains("Google")) {
-                textComponent = textComponent.append(Component.text("[Google Maps Link] ", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng)).decoration(TextDecoration.BOLD, true));
+                textComponent = textComponent.append(Component.text("[Google Maps] ", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng)).decoration(TextDecoration.BOLD, true));
             }
             if (mapLinks.contains("Yandex")) {
-                 textComponent = textComponent.append(Component.text("[Yandex Maps Link] ", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://yandex.com/maps/?ll=" + lng + "%2C" + lat + "z=10")).decoration(TextDecoration.BOLD, true));
+                textComponent = textComponent.append(Component.text("[Yandex Maps] ", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://yandex.com/maps/?ll=" + lng + "%2C" + lat + "z=10")).decoration(TextDecoration.BOLD, true));
             }
             if (mapLinks.contains("OSM")) {
-                textComponent = textComponent.append(Component.text("[OSM Link] ", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://www.openstreetmap.org/#map=19/" + lat + "/" + lng)).decoration(TextDecoration.BOLD, true));
+                textComponent = textComponent.append(Component.text("[OSM] ", NamedTextColor.YELLOW).clickEvent(ClickEvent.openUrl("https://www.openstreetmap.org/#map=19/" + lat + "/" + lng)).decoration(TextDecoration.BOLD, true));
             }
             VanillaTerra.sendComponent(commandSender, textComponent);
-        }catch(Exception e){
-            commandSender.sendMessage("A unknown error occurred. Please contact the server's developers.");
+        } catch (Exception e) {
+            VanillaTerra.sendComponent(commandSender, Component.text("An unknown error occurred executing this command.")
+                    .color(NamedTextColor.DARK_RED));
             e.printStackTrace();
         }
         return true;

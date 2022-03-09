@@ -1,3 +1,4 @@
+// Adapted from BuildTheEarth/terraplusplus: https://github.com/BuildTheEarth/terraplusplus
 package com.github.vaporrrr.vanillaterra.commands;
 
 import com.github.vaporrrr.vanillaterra.VanillaTerra;
@@ -26,20 +27,19 @@ public class Tpll implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!commandSender.hasPermission("vt.tpll") && !commandSender.isOp()) {
-            TextComponent textComponent = Component.text("You do not have permission to use that command.")
-                    .color(NamedTextColor.DARK_RED);
-            VanillaTerra.sendComponent(commandSender, textComponent);
+            VanillaTerra.sendComponent(commandSender, Component.text("You do not have permission to use that command.")
+                    .color(NamedTextColor.DARK_RED));
             return true;
         }
         if (!(commandSender instanceof Player)) {
-            TextComponent textComponent = Component.text("Only players can use this command.")
-                    .color(NamedTextColor.DARK_RED);
-            VanillaTerra.sendComponent(commandSender, textComponent);
+            VanillaTerra.sendComponent(commandSender, Component.text("Only players can use this command.")
+                    .color(NamedTextColor.DARK_RED));
             return true;
         }
         try {
             Player player = (Player) commandSender;
             Location l = player.getLocation();
+            double altitude = Double.NaN;
             LatLng defaultCoords = CoordinateParseUtils.parseVerbatimCoordinates(this.getRawArguments(args).trim());
 
             if (defaultCoords == null) {
@@ -52,17 +52,25 @@ public class Tpll implements CommandExecutor {
             LatLng possibleHeightCoords = CoordinateParseUtils.parseVerbatimCoordinates(this.getRawArguments(this.inverseSelectArray(args, args.length - 1)));
             if (possibleHeightCoords != null) {
                 defaultCoords = possibleHeightCoords;
+                try {
+                    altitude = Double.parseDouble(args[args.length - 1]);
+                } catch (Exception ignored) {
+                }
             }
 
             LatLng possibleHeightNameCoords = CoordinateParseUtils.parseVerbatimCoordinates(this.getRawArguments(this.inverseSelectArray(this.selectArray(args), this.selectArray(args).length - 1)));
             if (possibleHeightNameCoords != null) {
                 defaultCoords = possibleHeightNameCoords;
+                try {
+                    altitude = Double.parseDouble(args[args.length - 1]);
+                } catch (Exception e) {
+                    altitude = Double.NaN;
+                }
             }
 
             if (defaultCoords == null) {
-                TextComponent textComponent = Component.text("Invalid coordinates. </tpll latitude longitude>")
-                        .color(NamedTextColor.RED);
-                VanillaTerra.sendComponent(commandSender, textComponent);
+                VanillaTerra.sendComponent(commandSender, Component.text("Invalid coordinates. </tpll latitude longitude>")
+                        .color(NamedTextColor.RED));
                 return true;
             }
 
@@ -73,20 +81,18 @@ public class Tpll implements CommandExecutor {
             try {
                 c = projection.fromGeo(c[0], c[1]);
             } catch (OutOfProjectionBoundsException e) {
-                e.printStackTrace();
+                VanillaTerra.sendComponent(commandSender, Component.text("You are not in the \"earth\". You must be in the projection/map.")
+                        .color(NamedTextColor.RED));
+                return true;
             }
-            int y;
-            if (args.length >= 3 && isInteger(args[2])) {
-                y = Integer.parseInt(args[2]);
-            } else {
-                int highest = player.getWorld().getHighestBlockAt((int) c[0], (int) c[1]).getY();
+            if (Double.isNaN(altitude)) {
+                int highest = player.getWorld().getHighestBlockAt((int) Math.floor(c[0]), (int) Math.floor(c[1])).getY();
                 if (highest <= player.getWorld().getMinHeight()) {
-                    TextComponent textComponent = Component.text("Please stay in generated areas. You are teleporting to restricted areas.")
-                            .color(NamedTextColor.RED);
-                    VanillaTerra.sendComponent(commandSender, textComponent);
+                    VanillaTerra.sendComponent(commandSender, Component.text("Please stay in generated areas. You are teleporting to restricted areas.")
+                            .color(NamedTextColor.RED));
                     return true;
                 }
-                y = highest + 1;
+                altitude = highest;
             }
             TextComponent textComponent = Component.text("Teleporting to ")
                     .color(NamedTextColor.GRAY)
@@ -94,8 +100,10 @@ public class Tpll implements CommandExecutor {
                     .append(Component.text(", ", NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true))
                     .append(Component.text(defaultCoords.getLng(), NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true));
             VanillaTerra.sendComponent(commandSender, textComponent);
-            PaperLib.teleportAsync(player, new Location(player.getWorld(), c[0], y, c[1], l.getYaw(), l.getPitch()));
+            PaperLib.teleportAsync(player, new Location(player.getWorld(), c[0], altitude, c[1], l.getYaw(), l.getPitch()));
         } catch (Exception e) {
+            VanillaTerra.sendComponent(commandSender, Component.text("An unknown error occurred executing this command.")
+                    .color(NamedTextColor.DARK_RED));
             e.printStackTrace();
         }
         return true;
@@ -127,7 +135,7 @@ public class Tpll implements CommandExecutor {
     /**
      * Gets all objects in a string array above a given index
      *
-     * @param args  Initial array
+     * @param args Initial array
      * @return Selected array
      */
     private String[] selectArray(String[] args) {
@@ -138,20 +146,5 @@ public class Tpll implements CommandExecutor {
     private String[] inverseSelectArray(String[] args, int index) {
         List<String> array = new ArrayList<>(Arrays.asList(args).subList(0, index));
         return array.toArray(array.toArray(new String[0]));
-    }
-
-    public static boolean isInteger(String s) {
-        if (s.isEmpty()) return false;
-        for (int i = 0; i < s.length(); i++) {
-            if (i == 0 && s.charAt(i) == '-') {
-                if (s.length() == 1) {
-                    return false;
-                } else {
-                    continue;
-                }
-            }
-            if (Character.digit(s.charAt(i), 10) < 0) return false;
-        }
-        return true;
     }
 }

@@ -12,16 +12,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanillaTerra extends JavaPlugin {
     private final FileConfiguration config;
-    private BukkitAudiences adventure;
+    private final BukkitAudiences adventure;
 
     public VanillaTerra() {
         this.config = getConfig();
+        this.adventure = BukkitAudiences.create(this);
     }
 
     @Override
     @SuppressWarnings("ConstantConditions")
     public void onEnable() {
-        this.adventure = BukkitAudiences.create(this);
         saveDefaultConfig();
         getLogger().info("VanillaTerra enabled!");
         getCommand("tpll").setExecutor(new Tpll());

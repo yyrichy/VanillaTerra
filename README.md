@@ -1,4 +1,6 @@
 # VanillaTerra (1.18)
+[![community](https://go.buildtheearth.net/community-shield)](https://github.com/buildtheearth) [![](https://img.shields.io/github/release/vaporrrr/VanillaTerra.svg)](https://github.com/vaporrrr/VanillaTerra/releases/latest "Latest release")
+
 For use on a 1.18 BTE vanilla Minecraft server.  
 Used on the BTE NE 1.18 vanilla Minecraft server.  
 Uses [terraminusminus](https://github.com/SmylerMC/terraminusminus).
